@@ -11,12 +11,20 @@ export default function initBugModel(sequelize, DataTypes) {
       type: DataTypes.STRING,
     },
     error_text: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.STRING,
     },
     commit: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.STRING,
+    },
+    feature_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'features',
+        key: 'id',
+      },
     },
     createdAt: {
       allowNull: false,

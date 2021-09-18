@@ -2,7 +2,7 @@ export default function initBugsController(db) {
   const index = async (request, response) => {
     try {
       const bugs = await db.Bug.findAll();
-      response.send({ items });
+      response.send({ bugs });
     } catch (error) {
       console.log(error);
     }
@@ -23,6 +23,7 @@ export default function initBugsController(db) {
         problem: request.body.problem,
         error_text: request.body.errorText,
         commit: request.body.commit,
+        feature_id: request.body.feature,
 
       });
       response.send({ data });
