@@ -12,11 +12,11 @@ module.exports = {
         type: Sequelize.STRING,
       },
       error_text: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING,
       },
       commit: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING,
       },
       created_at: {

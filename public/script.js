@@ -8,10 +8,17 @@ const formContainer = document.createElement('div');
 // create form elements: problem, error, commit, feature
 const problemInput = document.createElement('input');
 problemInput.placeholder = 'Input problem';
+problemInput.setAttribute('required', 'required');
+
 const errorInput = document.createElement('input');
 errorInput.placeholder = 'Input Error';
+errorInput.setAttribute('required', 'required');
+
 const commitInput = document.createElement('input');
 commitInput.placeholder = 'Input Commit';
+commitInput.setAttribute('required', 'required');
+
+const bugDiv = document.createElement('div');
 // create div to append all different features
 const featureDiv = document.createElement('div');
 // list all features
@@ -27,6 +34,8 @@ const listFeatures = () => {
         featureBtn.type = 'radio';
         featureBtn.name = 'feature';
         featureBtn.checked = false;
+        featureBtn.setAttribute('required', 'required');
+
         // featureBtn.className = 'not-selected';
         featureBtn.value = `${features[i].id}`;
         const label = document.createElement('label');
@@ -38,6 +47,7 @@ const listFeatures = () => {
       }
     });
 };
+
 // create submit form btn
 const submitBtn = document.createElement('button');
 submitBtn.innerText = 'Submit Bug';
@@ -66,8 +76,9 @@ const createBugList = () => {
 };
 // set button to display form on click
 createBtn.addEventListener('click', () => {
-  listFeatures();
+  bugDiv.innerHTML = '';
   createBugList();
+  listFeatures();
   document.body.appendChild(formContainer);
   document.body.appendChild(bugListContainer);
 });
@@ -81,16 +92,23 @@ submitBtn.addEventListener('click', () => {
     commit: commitInput.value,
     feature: feature.value,
   };
+
   axios
     .post('/', bugData)
     .then((response) => {
       // display successful bug submission message
-      const bugDiv = document.createElement('div');
-      const newBug = response.data.bugData;
       console.log('response :>> ', response);
+
+      const newBug = response.data.data;
       bugDiv.innerHTML = `<h3>New Bug Problem (${newBug.problem}) Created<br> </h3> `;
       document.body.appendChild(bugDiv);
+      bugListContainer.innerHTML = '';
+      featureDiv.innerHTML = '';
+      problemInput.value = '';
+      errorInput.value = '';
+      commitInput.value = '';
       document.body.removeChild(formContainer);
+      // document.body.removeChild(bugListContainer);
     })
     .catch((error) => {
     // handle error
