@@ -12,10 +12,10 @@ const errorInput = document.createElement('input');
 errorInput.placeholder = 'Input Error';
 const commitInput = document.createElement('input');
 commitInput.placeholder = 'Input Commit';
-// create div to append all features
+// create div to append all different features
 const featureDiv = document.createElement('div');
-// create all features
-const createFeatures = () => {
+// list all features
+const listFeatures = () => {
   axios
     .get('/features')
     .then((response) => {
@@ -38,7 +38,6 @@ const createFeatures = () => {
       }
     });
 };
-createFeatures();
 // create submit form btn
 const submitBtn = document.createElement('button');
 submitBtn.innerText = 'Submit Bug';
@@ -50,26 +49,44 @@ formContainer.appendChild(commitInput);
 formContainer.appendChild(featureDiv);
 formContainer.appendChild(submitBtn);
 
+// create bug list container
+const bugListContainer = document.createElement('div');
+const createBugList = () => {
+  axios
+    .get('/index')
+    .then((response) => {
+      const { bugs } = response.data;
+      console.log(response.data.bugs);
+      bugs.forEach((bug) => {
+        const bugPara = document.createElement('p');
+        bugPara.innerHTML = `<h2> ${bug.id}: ${bug.problem} </h2>`;
+        bugListContainer.appendChild(bugPara);
+      });
+    });
+};
 // set button to display form on click
 createBtn.addEventListener('click', () => {
+  listFeatures();
+  createBugList();
   document.body.appendChild(formContainer);
+  document.body.appendChild(bugListContainer);
 });
 
 // set button to post form data on click
 submitBtn.addEventListener('click', () => {
   const feature = document.querySelector('input[name="feature"]:checked');
-  const data = {
+  const bugData = {
     problem: problemInput.value,
     errorText: errorInput.value,
     commit: commitInput.value,
     feature: feature.value,
   };
   axios
-    .post('/', data)
+    .post('/', bugData)
     .then((response) => {
       // display successful bug submission message
       const bugDiv = document.createElement('div');
-      const newBug = response.data.data;
+      const newBug = response.data.bugData;
       console.log('response :>> ', response);
       bugDiv.innerHTML = `<h3>New Bug Problem (${newBug.problem}) Created<br> </h3> `;
       document.body.appendChild(bugDiv);

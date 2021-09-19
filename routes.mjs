@@ -7,7 +7,7 @@ export default function bindRoutes(app) {
   const FeaturesController = initFeaturesController(db);
   app.get('/', BugsController.create);
   app.post('/', BugsController.createForm);
-  app.get('index', BugsController.index);
+  app.get('/index', BugsController.index);
   app.get('/features', FeaturesController.index);
   // initialize the controller functions here
   // pass in the db for all callbacks
