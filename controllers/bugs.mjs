@@ -18,7 +18,7 @@ export default function initBugsController(db) {
   const createForm = async (request, response) => {
     console.log(request.body);
     try {
-      const data = await db.Bug.create({
+      const bug = await db.Bug.create({
 
         problem: request.body.problem,
         error_text: request.body.errorText,
@@ -26,7 +26,7 @@ export default function initBugsController(db) {
         feature_id: request.body.feature,
 
       });
-      response.send({ data });
+      response.send({ bug });
     } catch (error) {
       console.log('error :>> ', error);
     }

@@ -8,7 +8,18 @@ export default function initFeaturesController(db) {
     }
   };
 
+  const createFeature = async (request, response) => {
+    console.log(request.body);
+    try {
+      const feature = await db.Feature.create({
+        name: request.body.feature,
+      });
+      response.send({ feature });
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  };
   return {
-    index,
+    index, createFeature,
   };
 }

@@ -9,6 +9,7 @@ export default function bindRoutes(app) {
   app.post('/', BugsController.createForm);
   app.get('/index', BugsController.index);
   app.get('/features', FeaturesController.index);
+  app.post('/createFeature', FeaturesController.createFeature);
   // initialize the controller functions here
   // pass in the db for all callbacks
   // define your route matchers here using app
