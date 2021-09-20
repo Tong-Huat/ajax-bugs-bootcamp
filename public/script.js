@@ -1,12 +1,16 @@
-// create "Create A Bug button"
+// create "Create A Bug button" on landing page
 const createBtn = document.createElement('button');
 createBtn.innerText = 'Create A Bug';
 document.body.appendChild(createBtn);
 
+// ***** create registration/login section *****
+
+// ***** create report bug section *****
 const reportNewBug = document.createElement('p');
 reportNewBug.innerText = 'Report A Bug:';
 // create form container to append all form elements
 const formContainer = document.createElement('div');
+
 // create form elements: problem, error, commit, feature
 const problemInput = document.createElement('input');
 problemInput.placeholder = 'Input problem';
@@ -61,6 +65,7 @@ formContainer.appendChild(commitInput);
 formContainer.appendChild(featureDiv);
 formContainer.appendChild(submitBtn);
 
+// ***** create bug list section *****
 // create bug list container
 const bugListContainer = document.createElement('div');
 bugListContainer.classList.add('container');
@@ -70,9 +75,6 @@ rows.classList.add('row');
 
 const bugList = document.createElement('p');
 bugList.innerText = 'List of Bugs Reported:';
-
-bugListContainer.appendChild(bugList);
-bugListContainer.appendChild(rows);
 
 const createBugList = () => {
   axios
@@ -95,6 +97,10 @@ const createBugList = () => {
     });
 };
 
+bugListContainer.appendChild(bugList);
+bugListContainer.appendChild(rows);
+
+// ***** create report feature section *****
 // create feature container to append feature element
 const featureContainer = document.createElement('div');
 featureContainer.classList.add('container');
@@ -118,6 +124,7 @@ featureContainer.appendChild(reportNewFeature);
 featureContainer.appendChild(featureRows);
 featureContainer.appendChild(createFeatureBtn);
 
+// ***** event listeners on click *****
 // set button to display form on click
 createBtn.addEventListener('click', () => {
   document.body.removeChild(createBtn);

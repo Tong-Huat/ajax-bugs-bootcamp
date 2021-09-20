@@ -1,6 +1,7 @@
 import db from './models/index.mjs';
 import initBugsController from './controllers/bugs.mjs';
 import initFeaturesController from './controllers/features.mjs';
+import initUsersController from './controllers/users.mjs';
 
 export default function bindRoutes(app) {
   const BugsController = initBugsController(db);

@@ -9,7 +9,7 @@ export default function initBugsController(db) {
   };
   const create = async (request, response) => {
     try {
-      response.render('createBug');
+      response.render('home');
     } catch (error) {
       console.log('error :>> ', error);
     }
