@@ -1,15 +1,53 @@
-// create "Create A Bug button" on landing page
+// create login on landing page
+const loginContainer = document.createElement('div');
+loginContainer.classList.add('container');
+
+// create login elements: email and pw
+const loginText = document.createElement('p');
+loginText.innerText = 'Please login to continue';
+
+const email = document.createElement('input');
+email.placeholder = 'Input Email';
+email.setAttribute('required', 'required');
+
+const password = document.createElement('input');
+password.placeholder = 'Input Password';
+password.setAttribute('required', 'required');
+
+const loginBtn = document.createElement('button');
+loginBtn.innerText = 'Login';
+
+loginContainer.appendChild(loginText);
+loginContainer.appendChild(email);
+loginContainer.appendChild(password);
+loginContainer.appendChild(loginBtn);
+document.body.appendChild(loginContainer);
+
 const createBtn = document.createElement('button');
 createBtn.innerText = 'Create A Bug';
-document.body.appendChild(createBtn);
+loginBtn.addEventListener('click', () => {
+  const loginData = {
+    email: email.value,
+    password: password.value,
+  };
 
-// ***** create registration/login section *****
+  axios
+    .post('/login', loginData)
+    .then((response) => {
+      document.body.appendChild(createBtn);
+      loginContainer.innerHTML = '';
+      document.body.removeChild(loginContainer);
+    });
+});
+
+// create "Create A Bug button" after succesful login
 
 // ***** create report bug section *****
 const reportNewBug = document.createElement('p');
 reportNewBug.innerText = 'Report A Bug:';
 // create form container to append all form elements
 const formContainer = document.createElement('div');
+formContainer.classList.add('container');
 
 // create form elements: problem, error, commit, feature
 const problemInput = document.createElement('input');
@@ -137,7 +175,7 @@ createBtn.addEventListener('click', () => {
 });
 
 // set button to post form data on click
-submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', (request) => {
   const feature = document.querySelector('input[name="feature"]:checked');
   const bugData = {
     problem: problemInput.value,
@@ -147,13 +185,14 @@ submitBtn.addEventListener('click', () => {
   };
 
   axios
-    .post('/', bugData)
+    .post('/createBug', bugData)
     .then((response) => {
       // display successful bug submission message
       console.log('response :>> ', response);
-
       const newBug = response.data.bug.problem;
       alert(`New Bug Problem (${newBug}) Created`);
+      createBugList();
+      rows.innerHTML = '';
       problemInput.value = '';
       errorInput.value = '';
       commitInput.value = '';
@@ -178,6 +217,8 @@ createFeatureBtn.addEventListener('click', () => {
       featureName.value = '';
       const newFeature = response.data.feature.name;
       alert(`New Feature (${newFeature}) Created`);
+      featureDiv.innerHTML = '';
+      listFeatures();
     })
     .catch((error) => {
     // handle error

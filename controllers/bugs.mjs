@@ -7,13 +7,6 @@ export default function initBugsController(db) {
       console.log(error);
     }
   };
-  const create = async (request, response) => {
-    try {
-      response.render('home');
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-  };
 
   const createForm = async (request, response) => {
     console.log(request.body);
@@ -24,6 +17,7 @@ export default function initBugsController(db) {
         error_text: request.body.errorText,
         commit: request.body.commit,
         feature_id: request.body.feature,
+        user_id: request.cookies.userId,
 
       });
       response.send({ bug });
@@ -33,6 +27,6 @@ export default function initBugsController(db) {
   };
 
   return {
-    index, create, createForm,
+    index, createForm,
   };
 }

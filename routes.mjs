@@ -6,8 +6,11 @@ import initUsersController from './controllers/users.mjs';
 export default function bindRoutes(app) {
   const BugsController = initBugsController(db);
   const FeaturesController = initFeaturesController(db);
-  app.get('/', BugsController.create);
-  app.post('/', BugsController.createForm);
+  const UsersController = initUsersController(db);
+
+  app.post('/login', UsersController.login);
+  app.get('/', UsersController.home);
+  app.post('/createBug', BugsController.createForm);
   app.get('/index', BugsController.index);
   app.get('/features', FeaturesController.index);
   app.post('/createFeature', FeaturesController.createFeature);
